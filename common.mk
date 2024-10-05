@@ -125,11 +125,6 @@ PRODUCT_COPY_FILES += \
 
 $(call soong_config_set,qtidisplay,target_uses_tp10_ubwc_for_10bit,true)
 
-# Doze
-PRODUCT_PACKAGES += \
-    OplusDoze \
-    OplusDozeResCommon
-
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
