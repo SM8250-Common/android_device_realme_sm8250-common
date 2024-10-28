@@ -247,6 +247,9 @@ PRODUCT_PACKAGES += \
     OPlusSystemUIResCommon \
     WifiResTarget
 
+# Oplus Camera
+$(call inherit-product-if-exists, vendor/oplus/camera/opluscamera.mk)
+
 # Partitions
 PRODUCT_PACKAGES += \
     vendor_bt_firmware_mountpoint \
