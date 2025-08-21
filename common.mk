@@ -8,6 +8,7 @@
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
 # A/B
+ifeq ($(TARGET_AB_DEVICE),true)
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
@@ -23,6 +24,7 @@ AB_OTA_POSTINSTALL_CONFIG += \
 PRODUCT_PACKAGES += \
     checkpoint_gc \
     otapreopt_script
+endif
 
 # Alert slider
 PRODUCT_PACKAGES += \

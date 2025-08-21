@@ -7,6 +7,7 @@
 COMMON_PATH := device/realme/sm8250-common
 
 # A/B
+ifeq ($(TARGET_AB_DEVICE),true)
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
@@ -20,6 +21,9 @@ AB_OTA_PARTITIONS += \
     vbmeta \
     vbmeta_system \
     vendor
+else
+AB_OTA_UPDATER := false
+endif
 
 # Architecture
 TARGET_ARCH := arm64
