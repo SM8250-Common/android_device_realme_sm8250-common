@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-COMMON_PATH := device/oneplus/sm8250-common
+COMMON_PATH := device/realme/sm8250-common
 
 # A/B
 AB_OTA_UPDATER := true
@@ -89,8 +89,8 @@ BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_RAMDISK_USE_LZ4 := true
-TARGET_KERNEL_ADDITIONAL_FLAGS := BRAND_SHOW_FLAG=oneplus
-TARGET_KERNEL_SOURCE := kernel/oneplus/sm8250
+TARGET_KERNEL_ADDITIONAL_FLAGS := BRAND_SHOW_FLAG=realme
+TARGET_KERNEL_SOURCE := kernel/realme/sm8250
 TARGET_KERNEL_CONFIG := vendor/kona-perf_defconfig vendor/oplus.config
 
 # Platform
@@ -163,4 +163,4 @@ WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Include the proprietary files BoardConfig.
-include vendor/oneplus/sm8250-common/BoardConfigVendor.mk
+include vendor/realme/sm8250-common/BoardConfigVendor.mk
