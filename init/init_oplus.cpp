@@ -88,6 +88,11 @@ void vendor_load_properties() {
             LOG(ERROR) << "Unexpected project name: " << prjname;
     }
 
+    // Disable NFC for Q5 Pro(CN) / GT NEO 3T(IN)
+    if (prjname != 21623 && prjname != 21732) {
+        OverrideProperty("ro.boot.product.hardware.sku", "nfc");
+    }
+
     if (std::string content; ReadFileToString("/proc/devinfo/ddr_type", &content)) {
         OverrideProperty("ro.boot.ddr_type", Split(Trim(content), "\t").back().c_str());
     }
