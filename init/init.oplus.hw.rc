@@ -3,3 +3,27 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+
+# bitra
+on property:ro.boot.prjname=21619
+    setprop ro.boot.hardware.revision "CN"
+
+on property:ro.boot.prjname=2161A
+    setprop ro.boot.hardware.revision "CN"
+
+on property:ro.boot.prjname=2169B
+    setprop ro.boot.hardware.revision "EU"
+
+on property:ro.boot.prjname=2169A
+    setprop ro.boot.hardware.revision "IN"
+
+# spartan
+on property:ro.boot.prjname=21623
+    setprop ro.boot.hardware.revision "CN"
+
+on property:ro.boot.prjname=21733
+    setprop ro.boot.hardware.revision "EU"
+
+on property:ro.boot.prjname=21732
+    setprop ro.boot.hardware.revision "IN"
+
