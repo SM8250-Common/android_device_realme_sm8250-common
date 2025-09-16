@@ -5,6 +5,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-if grep -q simcardnum.doublesim=1 /proc/cmdline; then
-    setprop vendor.radio.multisim.config dsds
-fi
+prjname=$(getprop ro.boot.prjname)
+
+# Radio
+case "$prjname" in
+    21619|2161A|2169A|2169B|21623|21732|21733)
+        setprop vendor.radio.multisim.config dsds
+        ;;
+esac
