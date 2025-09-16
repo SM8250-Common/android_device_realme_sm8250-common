@@ -38,6 +38,55 @@ void OverrideProperty(const char* name, const char* value) {
  * after the original property has been set.
  */
 void vendor_load_properties() {
+    auto prjname_string = GetProperty("ro.boot.prjname", "0");
+    int prjname = 0;
+    char* end;
+    long val;
+
+    if (prjname_string.find_first_of("AB") != std::string::npos) { // for specific prjname string(2161A, 2169A, 2169B)
+        val = strtol(prjname_string.c_str(), &end, 16);
+    } else {
+        val = strtol(prjname_string.c_str(), &end, 10);
+    }
+
+    if (*end != '\0') {
+        LOG(ERROR) << "Invalid project name format: " << prjname_string;
+        return;
+    }
+
+    prjname = static_cast<int>(val);
+
+    switch (prjname) {
+        case 21619: // bitra CN
+        case 0x2161A: // bitra CN (Dragon Ball Edition)
+            OverrideProperty("ro.product.product.model", "RMX3370");
+            OverrideProperty("ro.product.product.device", "RE5473");
+            if (prjname == 21619) {
+                OverrideProperty("ro.product.marketname", "realme GT Neo2");
+            } else {
+                OverrideProperty("ro.product.marketname", "realme GT Neo2 Dragon Ball Edition");
+            }
+            break;
+        case 0x2169A: // bitra IN
+        case 0x2169B: // bitra EU
+            OverrideProperty("ro.product.product.model", "RMX3370");
+            OverrideProperty("ro.product.product.device", "RE879AL1");
+            OverrideProperty("ro.product.marketname", "realme GT NEO 2");
+            break;
+        case 21623: // spartan CN
+            OverrideProperty("ro.product.product.model", "RMX3372");
+            OverrideProperty("ro.product.product.device", "RE5477");
+            OverrideProperty("ro.product.marketname", "realme Q5 Pro");
+            break;
+        case 21732: // spartan IN
+        case 21733: // spartan EU
+            OverrideProperty("ro.product.product.model", "RMX3371");
+            OverrideProperty("ro.product.product.device", "RE54E4L1");
+            OverrideProperty("ro.product.marketname", "realme GT NEO 3T");
+            break;
+        default:
+            LOG(ERROR) << "Unexpected project name: " << prjname;
+    }
 
     if (std::string content; ReadFileToString("/proc/devinfo/ddr_type", &content)) {
         OverrideProperty("ro.boot.ddr_type", Split(Trim(content), "\t").back().c_str());
