@@ -187,6 +187,7 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_PACKAGES += \
     init.class_main.sh \
+    init.nfc.rc \
     init.oplus.hw.rc \
     init.oplus.hw.recovery.rc \
     init.oplus.rc \
