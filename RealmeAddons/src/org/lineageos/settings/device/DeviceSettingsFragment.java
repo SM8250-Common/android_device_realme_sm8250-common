@@ -17,12 +17,41 @@
 package org.lineageos.settings.device;
 
 import android.os.Bundle;
+import androidx.preference.Preference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
-public class DeviceSettingsFragment extends PreferenceFragmentCompat {
+import org.lineageos.settings.device.display.AntiFlikerUtils;
+
+public class DeviceSettingsFragment extends PreferenceFragmentCompat
+        implements OnPreferenceChangeListener {
+
+    private static final String KEY_ANTI_FLICKER = "anti_flicker";
+
+    private SwitchPreferenceCompat mAntiFlikerPreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.device_settings);
+
+        mAntiFlikerPreference = findPreference(KEY_ANTI_FLICKER);
+        if (mAntiFlikerPreference != null) {
+            if (AntiFlikerUtils.isSupported()) {
+                mAntiFlikerPreference.setEnabled(true);
+                mAntiFlikerPreference.setOnPreferenceChangeListener(this);
+            } else {
+                getPreferenceScreen().removePreference(mAntiFlikerPreference);
+            }
+        }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (KEY_ANTI_FLICKER.equals(preference.getKey())) {
+            boolean enabled = (Boolean) newValue;
+            return AntiFlikerUtils.setEnabled(enabled);
+        }
+        return false;
     }
 }

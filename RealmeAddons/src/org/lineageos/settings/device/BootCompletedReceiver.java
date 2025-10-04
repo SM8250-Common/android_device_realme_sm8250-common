@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.lineageos.settings.device.display.AntiFlikerUtils;
+
 public class BootCompletedReceiver extends BroadcastReceiver {
 
     private static final String TAG = "RealmeAddons";
@@ -28,6 +30,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         Log.d(TAG, "Received boot completed intent");
-        // Add initialization code here
+
+        // Restore anti-flicker state
+        AntiFlikerUtils.restore(context);
     }
 }
