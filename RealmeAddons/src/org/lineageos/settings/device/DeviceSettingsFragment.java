@@ -22,14 +22,17 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
+import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
 
 public class DeviceSettingsFragment extends PreferenceFragmentCompat
         implements OnPreferenceChangeListener {
 
     private static final String KEY_ANTI_FLICKER = "anti_flicker";
+    private static final String KEY_BYPASS_CHARGING = "bypass_charging";
 
     private SwitchPreferenceCompat mAntiFlikerPreference;
+    private SwitchPreferenceCompat mBypassChargingPreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -44,6 +47,16 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
                 getPreferenceScreen().removePreference(mAntiFlikerPreference);
             }
         }
+
+        mBypassChargingPreference = findPreference(KEY_BYPASS_CHARGING);
+        if (mBypassChargingPreference != null) {
+            if (BypassChargingUtils.isSupported()) {
+                mBypassChargingPreference.setEnabled(true);
+                mBypassChargingPreference.setOnPreferenceChangeListener(this);
+            } else {
+                getPreferenceScreen().removePreference(mBypassChargingPreference);
+            }
+        }
     }
 
     @Override
@@ -51,6 +64,9 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         if (KEY_ANTI_FLICKER.equals(preference.getKey())) {
             boolean enabled = (Boolean) newValue;
             return AntiFlikerUtils.setEnabled(enabled);
+        } else if (KEY_BYPASS_CHARGING.equals(preference.getKey())) {
+            boolean enabled = (Boolean) newValue;
+            return BypassChargingUtils.setEnabled(enabled);
         }
         return false;
     }

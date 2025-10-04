@@ -23,4 +23,16 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
+
+    required: [
+        "privapp_whitelist_org.lineageos.settings.device",
+    ],
+}
+
+prebuilt_etc {
+    name: "privapp_whitelist_org.lineageos.settings.device",
+    sub_dir: "permissions",
+    src: "privapp-permissions-org.lineageos.settings.device.xml",
+    filename_from_src: true,
+    system_ext_specific: true,
 }

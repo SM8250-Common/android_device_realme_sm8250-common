@@ -26,4 +26,9 @@
     <string name="anti_flicker_title">Anti-flicker</string>
     <string name="anti_flicker_summary">Reduce eye strain in low brightness by eliminating screen flicker</string>
     <string name="anti_flicker_tile_title">Anti-flicker</string>
+
+    <!-- Bypass Charging -->
+    <string name="bypass_charging_title">Bypass Charging</string>
+    <string name="bypass_charging_summary">Power device directly from charger, bypass battery to reduce heat during intensive tasks</string>
+    <string name="bypass_charging_tile_title">Bypass Charging</string>
 </resources>

@@ -72,5 +72,16 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".battery.BypassChargingTileService"
+            android:icon="@drawable/ic_bypass_charging"
+            android:label="@string/bypass_charging_tile_title"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
     </application>
 </manifest>
