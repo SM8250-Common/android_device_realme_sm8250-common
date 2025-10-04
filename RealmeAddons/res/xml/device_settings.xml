@@ -28,4 +28,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="gaming_category"
+        android:title="Gaming">
+
+        <SwitchPreferenceCompat
+            android:key="bypass_charging"
+            android:title="@string/bypass_charging_title"
+            android:summary="@string/bypass_charging_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

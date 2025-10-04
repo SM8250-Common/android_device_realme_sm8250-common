@@ -55,7 +55,7 @@ public class FileUtils {
     /**
      * Read the first line from the specified file
      */
-    public static String readLine(String fileName) {
+    public static String readOneLine(String fileName) {
         BufferedReader reader = null;
         String line = null;
         try {
