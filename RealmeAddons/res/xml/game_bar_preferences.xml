@@ -60,12 +60,6 @@
             android:title="GPU Clock Speed"
             android:summary="Show current GPU clock frequency"
             android:defaultValue="false" />
-
-        <SwitchPreferenceCompat
-            android:key="game_bar_gpu_temp_enable"
-            android:title="GPU Temperature"
-            android:summary="Show current GPU temperature"
-            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory
