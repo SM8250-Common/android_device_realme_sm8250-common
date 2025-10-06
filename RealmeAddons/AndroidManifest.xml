@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <application
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_settings_device"
         android:label="@string/device_settings_app_name"
         android:persistent="true"
         android:theme="@style/Theme.SubSettingsBase">
