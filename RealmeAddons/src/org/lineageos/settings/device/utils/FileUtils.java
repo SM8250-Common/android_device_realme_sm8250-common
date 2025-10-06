@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2016 The CyanogenMod Project
  * Copyright (C) 2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +29,7 @@ import java.io.IOException;
 
 public final class FileUtils {
 
-    private static final String TAG = "RealmeAddons";
+    private static final String TAG = "FileUtils";
 
     private FileUtils() {
         // This class is not supposed to be instantiated

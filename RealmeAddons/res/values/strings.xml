@@ -31,4 +31,13 @@
     <string name="bypass_charging_title">Bypass Charging</string>
     <string name="bypass_charging_summary">Power device directly from charger, bypass battery to reduce heat during intensive tasks</string>
     <string name="bypass_charging_tile_title">Bypass Charging</string>
+
+    <!-- GameBar Overlay -->
+    <string name="game_bar_title">GameBar</string>
+    <string name="game_bar_summary">Enable the system overlay (FPS, Temp, etc.)</string>
+    <string name="overlay_permission_required">Overlay permission is required</string>
+    <string name="overlay_permission_granted">Overlay permission granted</string>
+    <string name="overlay_permission_denied">Overlay permission denied</string>
+    <string name="game_bar_tile_label">GameBar</string>
+    <string name="game_bar_tile_description">Toggle the game overlay</string>
 </resources>
