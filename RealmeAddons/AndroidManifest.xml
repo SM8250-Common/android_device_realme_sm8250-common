@@ -22,6 +22,8 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.STATUS_BAR" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -82,6 +84,47 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+
+        <!-- GameBar Overlay -->
+        <activity
+            android:name=".gamebar.GameBarSettingsActivity"
+            android:exported="false"
+            android:label="@string/game_bar_title"
+            android:enableOnBackInvokedCallback="true" />
+
+        <activity
+            android:name=".gamebar.GameBarAppSelectorActivity"
+            android:exported="false"
+            android:label="Select Apps" />
+
+        <activity
+            android:name=".gamebar.GameBarAppRemoverActivity"
+            android:exported="false"
+            android:label="Remove Apps" />
+
+        <service
+            android:name=".gamebar.GameBarTileService"
+            android:icon="@drawable/ic_game_bar"
+            android:label="@string/game_bar_tile_label"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".gamebar.GameBarMonitorService"
+            android:exported="false" />
+
+        <receiver
+            android:name=".gamebar.GameBarBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
 
     </application>
 </manifest>
