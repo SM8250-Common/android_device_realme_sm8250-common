@@ -28,15 +28,19 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
+import org.lineageos.settings.device.hbm.AutoHBMService;
+import org.lineageos.settings.device.hbm.HBMUtils;
 
 public class DeviceSettingsFragment extends PreferenceFragmentCompat
         implements OnPreferenceChangeListener {
 
     private static final String KEY_ANTI_FLICKER = "anti_flicker";
     private static final String KEY_BYPASS_CHARGING = "bypass_charging";
+    private static final String KEY_AUTO_HBM = "auto_hbm_enabled";
 
     private SwitchPreferenceCompat mAntiFlikerPreference;
     private SwitchPreferenceCompat mBypassChargingPreference;
+    private SwitchPreferenceCompat mAutoHBMPreference;
 
     private final BroadcastReceiver mPowerReceiver = new BroadcastReceiver() {
         @Override
@@ -66,6 +70,16 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
                 updateBypassChargingState();
             } else {
                 getPreferenceScreen().removePreference(mBypassChargingPreference);
+            }
+        }
+
+        mAutoHBMPreference = findPreference(KEY_AUTO_HBM);
+        if (mAutoHBMPreference != null) {
+            if (HBMUtils.isSupported()) {
+                mAutoHBMPreference.setEnabled(true);
+                mAutoHBMPreference.setOnPreferenceChangeListener(this);
+            } else {
+                getPreferenceScreen().removePreference(mAutoHBMPreference);
             }
         }
     }
@@ -115,6 +129,14 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         } else if (KEY_BYPASS_CHARGING.equals(preference.getKey())) {
             boolean enabled = (Boolean) newValue;
             return BypassChargingUtils.setEnabled(enabled);
+        } else if (KEY_AUTO_HBM.equals(preference.getKey())) {
+            boolean enabled = (Boolean) newValue;
+            // The service will pick up the preference change automatically
+            // Just ensure the service is running
+            if (enabled) {
+                getContext().startService(new Intent(getContext(), AutoHBMService.class));
+            }
+            return true;
         }
         return false;
     }

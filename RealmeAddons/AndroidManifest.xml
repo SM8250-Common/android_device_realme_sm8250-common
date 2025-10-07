@@ -126,5 +126,10 @@
             </intent-filter>
         </receiver>
 
+        <!-- Auto HBM Service -->
+        <service
+            android:name=".hbm.AutoHBMService"
+            android:exported="false" />
+
     </application>
 </manifest>

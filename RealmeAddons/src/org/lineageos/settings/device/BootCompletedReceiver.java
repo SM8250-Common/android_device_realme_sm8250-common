@@ -23,6 +23,8 @@ import android.util.Log;
 
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
+import org.lineageos.settings.device.hbm.AutoHBMService;
+import org.lineageos.settings.device.hbm.HBMUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
@@ -37,5 +39,10 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         // Restore bypass charging state
         BypassChargingUtils.restore(context);
+
+        // Start Auto HBM service if supported
+        if (HBMUtils.isSupported()) {
+            context.startService(new Intent(context, AutoHBMService.class));
+        }
     }
 }

@@ -26,6 +26,12 @@
             android:summary="@string/anti_flicker_summary"
             android:defaultValue="false" />
 
+        <SwitchPreferenceCompat
+            android:key="auto_hbm_enabled"
+            android:title="@string/auto_hbm_title"
+            android:summary="@string/auto_hbm_summary"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
