@@ -43,6 +43,12 @@ public class BypassChargingTileService extends TileService {
             return;
         }
 
+        if (!BypassChargingUtils.isCharging(this)) {
+            // Don't allow toggling when not charging
+            updateTile();
+            return;
+        }
+
         boolean currentState = BypassChargingUtils.isCurrentlyEnabled();
         boolean newState = !currentState;
 
@@ -62,6 +68,9 @@ public class BypassChargingTileService extends TileService {
         }
 
         if (!BypassChargingUtils.isSupported()) {
+            tile.setState(Tile.STATE_UNAVAILABLE);
+        } else if (!BypassChargingUtils.isCharging(this)) {
+            // Disable tile when not charging
             tile.setState(Tile.STATE_UNAVAILABLE);
         } else {
             boolean enabled = BypassChargingUtils.isCurrentlyEnabled();

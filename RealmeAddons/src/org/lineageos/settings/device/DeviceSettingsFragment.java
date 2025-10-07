@@ -16,6 +16,10 @@
 
 package org.lineageos.settings.device;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
@@ -34,6 +38,13 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
     private SwitchPreferenceCompat mAntiFlikerPreference;
     private SwitchPreferenceCompat mBypassChargingPreference;
 
+    private final BroadcastReceiver mPowerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateBypassChargingState();
+        }
+    };
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.device_settings);
@@ -51,11 +62,48 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         mBypassChargingPreference = findPreference(KEY_BYPASS_CHARGING);
         if (mBypassChargingPreference != null) {
             if (BypassChargingUtils.isSupported()) {
-                mBypassChargingPreference.setEnabled(true);
                 mBypassChargingPreference.setOnPreferenceChangeListener(this);
+                updateBypassChargingState();
             } else {
                 getPreferenceScreen().removePreference(mBypassChargingPreference);
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_POWER_CONNECTED);
+            filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+            getContext().registerReceiver(mPowerReceiver, filter);
+            updateBypassChargingState();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
+            try {
+                getContext().unregisterReceiver(mPowerReceiver);
+            } catch (IllegalArgumentException e) {
+                // Receiver not registered, ignore
+            }
+        }
+    }
+
+    private void updateBypassChargingState() {
+        if (mBypassChargingPreference == null) {
+            return;
+        }
+        boolean isCharging = BypassChargingUtils.isCharging(getContext());
+        mBypassChargingPreference.setEnabled(isCharging);
+        if (!isCharging) {
+            mBypassChargingPreference.setSummary(R.string.bypass_charging_unavailable_summary);
+        } else {
+            mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
         }
     }
 

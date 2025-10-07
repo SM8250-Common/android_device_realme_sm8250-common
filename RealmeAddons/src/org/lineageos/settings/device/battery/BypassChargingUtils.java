@@ -18,6 +18,9 @@ package org.lineageos.settings.device.battery;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import androidx.preference.PreferenceManager;
 
 import org.lineageos.settings.device.utils.FileUtils;
@@ -66,5 +69,25 @@ public class BypassChargingUtils {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean enabled = prefs.getBoolean(BYPASS_CHARGING_KEY, false);
         setEnabled(enabled);
+    }
+
+    /**
+     * Check if device is currently charging
+     */
+    public static boolean isCharging(Context context) {
+        if (context == null) {
+            return false;
+        }
+
+        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = context.registerReceiver(null, ifilter);
+
+        if (batteryStatus == null) {
+            return false;
+        }
+
+        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        return status == BatteryManager.BATTERY_STATUS_CHARGING ||
+               status == BatteryManager.BATTERY_STATUS_FULL;
     }
 }
