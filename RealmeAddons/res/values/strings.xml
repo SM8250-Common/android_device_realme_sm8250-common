@@ -30,6 +30,7 @@
     <!-- Bypass Charging -->
     <string name="bypass_charging_title">Bypass Charging</string>
     <string name="bypass_charging_summary">Power device directly from charger, bypass battery to reduce heat during intensive tasks</string>
+    <string name="bypass_charging_unavailable_summary">Connect charger to enable this feature</string>
     <string name="bypass_charging_tile_title">Bypass Charging</string>
 
     <!-- GameBar Overlay -->
