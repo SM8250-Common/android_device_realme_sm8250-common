@@ -21,15 +21,15 @@
         android:title="@string/display_category_title">
 
         <SwitchPreferenceCompat
-            android:key="anti_flicker"
-            android:title="@string/anti_flicker_title"
-            android:summary="@string/anti_flicker_summary"
-            android:defaultValue="false" />
-
-        <SwitchPreferenceCompat
             android:key="auto_hbm_enabled"
             android:title="@string/auto_hbm_title"
             android:summary="@string/auto_hbm_summary"
+            android:defaultValue="false" />
+
+        <SwitchPreferenceCompat
+            android:key="anti_flicker"
+            android:title="@string/anti_flicker_title"
+            android:summary="@string/anti_flicker_summary"
             android:defaultValue="false" />
 
     </PreferenceCategory>
