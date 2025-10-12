@@ -17,19 +17,19 @@
             android:key="game_bar_fps_enable"
             android:title="FPS Overlay"
             android:summary="Show current FPS on screen"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
 
         <SwitchPreferenceCompat
             android:key="game_bar_temp_enable"
             android:title="Device Temperature"
             android:summary="Show device (battery) temperature"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
 
         <SwitchPreferenceCompat
             android:key="game_bar_cpu_usage_enable"
             android:title="CPU Usage"
             android:summary="Show current CPU usage percentage"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
 
         <SwitchPreferenceCompat
             android:key="game_bar_cpu_clock_enable"
@@ -167,7 +167,7 @@
             android:key="game_bar_split_mode"
             android:title="Split Mode"
             android:summary="Choose Side-by-Side or Stacked arrangement"
-            android:defaultValue="stacked"
+            android:defaultValue="side_by_side"
             android:entries="@array/game_bar_split_mode_entries"
             android:entryValues="@array/game_bar_split_mode_values" />
     </PreferenceCategory>
