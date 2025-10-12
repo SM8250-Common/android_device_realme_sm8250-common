@@ -16,6 +16,7 @@
 
 package org.lineageos.settings.device.battery;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
@@ -49,16 +50,24 @@ public class BypassChargingTileService extends TileService {
             return;
         }
 
-        boolean currentState = BypassChargingUtils.isCurrentlyEnabled();
+        // Toggle the master switch
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean currentState = prefs.getBoolean(BYPASS_CHARGING_KEY, false);
         boolean newState = !currentState;
 
-        if (BypassChargingUtils.setEnabled(newState)) {
-            // Save to preferences
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean(BYPASS_CHARGING_KEY, newState).apply();
+        // Save new state
+        prefs.edit().putBoolean(BYPASS_CHARGING_KEY, newState).apply();
 
-            updateTile();
+        // Start or stop the monitoring service
+        if (newState) {
+            startService(new Intent(this, BypassChargingService.class));
+        } else {
+            stopService(new Intent(this, BypassChargingService.class));
+            // Restore normal charging when disabled
+            BypassChargingUtils.setEnabled(false);
         }
+
+        updateTile();
     }
 
     private void updateTile() {
@@ -69,12 +78,32 @@ public class BypassChargingTileService extends TileService {
 
         if (!BypassChargingUtils.isSupported()) {
             tile.setState(Tile.STATE_UNAVAILABLE);
+            tile.setSubtitle(null);
         } else if (!BypassChargingUtils.isCharging(this)) {
             // Disable tile when not charging
             tile.setState(Tile.STATE_UNAVAILABLE);
+            tile.setSubtitle(getString(R.string.bypass_charging_unavailable_summary));
         } else {
-            boolean enabled = BypassChargingUtils.isCurrentlyEnabled();
-            tile.setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean enabled = prefs.getBoolean(BYPASS_CHARGING_KEY, false);
+            int batteryLevel = BypassChargingUtils.getBatteryLevel(this);
+            int threshold = BypassChargingUtils.getThreshold(this);
+            boolean bypassActive = BypassChargingUtils.isCurrentlyEnabled();
+
+            if (enabled && bypassActive) {
+                // Bypass is active
+                tile.setState(Tile.STATE_ACTIVE);
+                tile.setSubtitle(getString(R.string.bypass_charging_tile_active, batteryLevel));
+            } else if (enabled) {
+                // Feature enabled but bypass not active yet
+                tile.setState(Tile.STATE_INACTIVE);
+                tile.setSubtitle(getString(R.string.bypass_charging_tile_charging, batteryLevel) +
+                               " • " + getString(R.string.bypass_charging_tile_threshold, threshold));
+            } else {
+                // Feature disabled
+                tile.setState(Tile.STATE_INACTIVE);
+                tile.setSubtitle(null);
+            }
         }
 
         tile.updateTile();

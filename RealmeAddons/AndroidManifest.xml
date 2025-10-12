@@ -85,6 +85,10 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".battery.BypassChargingService"
+            android:exported="false" />
+
         <!-- GameBar Overlay -->
         <activity
             android:name=".gamebar.GameBarSettingsActivity"

@@ -32,10 +32,16 @@
     <string name="auto_hbm_summary">Automatically boost screen brightness in bright outdoor conditions</string>
 
     <!-- Bypass Charging -->
-    <string name="bypass_charging_title">Bypass Charging</string>
-    <string name="bypass_charging_summary">Power device directly from charger, bypass battery to reduce heat during intensive tasks</string>
+    <string name="bypass_charging_title">Smart Bypass Charging</string>
+    <string name="bypass_charging_summary">Automatically bypass battery charging to reduce heat during intensive tasks</string>
+    <string name="bypass_charging_threshold_title">Activate at Battery Level</string>
+    <string name="bypass_charging_threshold_summary">Bypass charging will activate when battery reaches %d%%</string>
+    <string name="bypass_charging_current_level">Current battery: %d%%</string>
     <string name="bypass_charging_unavailable_summary">Connect charger to enable this feature</string>
     <string name="bypass_charging_tile_title">Bypass Charging</string>
+    <string name="bypass_charging_tile_active">Bypass Active (%d%%)</string>
+    <string name="bypass_charging_tile_charging">Charging (%d%%)</string>
+    <string name="bypass_charging_tile_threshold">Auto at %d%%</string>
 
     <!-- GameBar Overlay -->
     <string name="game_bar_title">GameBar</string>

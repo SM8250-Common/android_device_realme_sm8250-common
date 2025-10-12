@@ -44,6 +44,14 @@
             android:summary="@string/bypass_charging_summary"
             android:defaultValue="false" />
 
+        <SeekBarPreference
+            android:key="bypass_charging_threshold"
+            android:title="@string/bypass_charging_threshold_title"
+            android:defaultValue="80"
+            android:max="100"
+            android:min="30"
+            android:dependency="bypass_charging" />
+
         <Preference
             android:key="game_bar_settings"
             android:title="@string/game_bar_title"
