@@ -115,7 +115,7 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libcamera_metadata_shim.so')
         .binary_regex_replace(b'com.oem.autotest', b'\x00om.oem.autotest'),
     'odm/lib64/libAlgoProcess.so': blob_fixup()
-        .replace_needed('android.hardware.graphics.common-V1-ndk_platform.so', 'android.hardware.graphics.common-V6-ndk.so'),
+        .replace_needed('android.hardware.graphics.common-V1-ndk_platform.so', 'android.hardware.graphics.common-V7-ndk.so'),
     'odm/lib64/libOGLManager.so': blob_fixup()
         .clear_symbol_version('AHardwareBuffer_allocate')
         .clear_symbol_version('AHardwareBuffer_describe')
