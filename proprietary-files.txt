@@ -13,9 +13,9 @@ vendor/lib64/libadsp_default_listener.so
 vendor/lib64/vendor.qti.hardware.dsp@1.0.so
 
 # ADSP modules
-odm/lib/rfsa/adsp/aiboost/libaiboostsr_skel_v66.so;MODULE_SUFFIX=.aiboost
-odm/lib/rfsa/adsp/aiboost/libaiboostubwc_skel.so;MODULE_SUFFIX=.aiboost
-odm/lib/rfsa/adsp/hta_lib/libhta_dsp_skel.so;MODULE_SUFFIX=_odm
+odm/lib/rfsa/adsp/aiboost/libaiboostsr_skel_v66.so
+odm/lib/rfsa/adsp/aiboost/libaiboostubwc_skel.so
+odm/lib/rfsa/adsp/hta_lib/libhta_dsp_skel.so
 odm/lib/rfsa/adsp/libQnnHtp.so
 odm/lib/rfsa/adsp/libQnnHtpAltPrepSkel.so
 odm/lib/rfsa/adsp/libQnnHtpSkel.so
