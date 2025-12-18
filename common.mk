@@ -201,16 +201,6 @@ $(call soong_config_set,libinit,vendor_init_lib,//$(LOCAL_PATH):libinit_oplus)
 # Kernel
 PRODUCT_ENABLE_UFFD_GC := true
 
-# Lineage Health
-PRODUCT_PACKAGES += \
-    vendor.lineage.health-service.default
-
-$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/oplus_chg/battery/mmi_charging_enable)
-
-# LiveDisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay-service.oplus
-
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
@@ -333,10 +323,6 @@ $(call inherit-product, hardware/oplus/oplus-fwk/oplus-fwk.mk)
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal-service.qti
-
-# Touch
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch-service.oplus
 
 # Update engine
 PRODUCT_PACKAGES += \
