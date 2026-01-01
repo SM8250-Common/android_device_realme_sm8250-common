@@ -63,6 +63,29 @@
                 android:resource="@string/device_settings_summary" />
         </activity>
 
+        <activity
+            android:name=".gameoptimizer.GameOptimizerActivity"
+            android:exported="true"
+            android:label="@string/game_optimizer_title"
+            android:enableOnBackInvokedCallback="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_game_optimizer" />
+            <meta-data
+                android:name="com.android.settings.icon_tintable"
+                android:value="true" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/game_optimizer_summary" />
+        </activity>
+
         <service
             android:name=".display.AntiFlikerTileService"
             android:icon="@drawable/ic_anti_flicker"

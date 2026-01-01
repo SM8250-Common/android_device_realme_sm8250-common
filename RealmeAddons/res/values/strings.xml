@@ -41,4 +41,15 @@
     <string name="overlay_permission_denied">Overlay permission denied</string>
     <string name="game_bar_tile_label">GameBar</string>
     <string name="game_bar_tile_description">Toggle the game overlay</string>
+
+    <!-- Game Optimizer -->
+    <string name="game_optimizer_title">Game Optimizer</string>
+    <string name="game_optimizer_summary">Optimize device performance for gaming</string>
+    <string name="game_optimizer_description">Enhance your gaming experience with optimized performance settings and battery management features designed for extended gaming sessions</string>
+
+    <!-- Game Optimizer Categories -->
+    <string name="game_optimizer_performance_title">Performance Optimization</string>
+    <string name="game_optimizer_thermal_title">Thermal Management</string>
+    <string name="game_optimizer_network_title">Network Optimization</string>
+    <string name="game_optimizer_display_title">Display Optimization</string>
 </resources>
