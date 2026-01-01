@@ -22,6 +22,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
@@ -31,27 +32,36 @@ import org.lineageos.settings.device.R;
 public class LayoutPreference extends Preference {
 
     private View mRootView;
-    private int mLayoutResId;
 
     public LayoutPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context, attrs, 0);
     }
 
     public LayoutPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        init(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                new int[]{android.R.attr.layout});
-        mLayoutResId = a.getResourceId(0, 0);
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = context.obtainStyledAttributes(
+                attrs, androidx.preference.R.styleable.Preference, defStyleAttr, 0);
+        int layoutResource = a.getResourceId(androidx.preference.R.styleable.Preference_android_layout, 0);
+        if (layoutResource == 0) {
+            throw new IllegalArgumentException("LayoutPreference requires a layout to be defined");
+        }
         a.recycle();
 
-        if (mLayoutResId != 0) {
-            setLayoutResource(mLayoutResId);
-        }
+        // Inflate the custom layout now
+        final View view = LayoutInflater.from(getContext())
+                .inflate(layoutResource, null, false);
+        setView(view);
+    }
+
+    private void setView(View view) {
+        setLayoutResource(R.layout.preference_layout);
+        mRootView = view;
+        setShouldDisableView(false);
     }
 
     @Override
@@ -62,11 +72,17 @@ public class LayoutPreference extends Preference {
         holder.itemView.setFocusable(selectable);
         holder.itemView.setClickable(selectable);
 
-        mRootView = holder.itemView;
+        FrameLayout layout = (FrameLayout) holder.itemView;
+        layout.removeAllViews();
+        ViewGroup parent = (ViewGroup) mRootView.getParent();
+        if (parent != null) {
+            parent.removeView(mRootView);
+        }
+        layout.addView(mRootView);
     }
 
-    public View findViewById(int id) {
-        return mRootView != null ? mRootView.findViewById(id) : null;
+    public <T extends View> T findViewById(int id) {
+        return mRootView.findViewById(id);
     }
 
     public View getRootView() {

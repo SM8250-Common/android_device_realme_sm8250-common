@@ -19,12 +19,13 @@ package org.lineageos.settings.device;
 import android.os.Bundle;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
+
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.settings.device.display.AntiFlikerUtils;
 
-public class DeviceSettingsFragment extends PreferenceFragmentCompat
+public class DeviceSettingsFragment extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener {
 
     private static final String KEY_ANTI_FLICKER = "anti_flicker";

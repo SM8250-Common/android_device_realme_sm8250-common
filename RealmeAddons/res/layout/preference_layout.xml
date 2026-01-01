@@ -14,26 +14,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
-
-    <ImageView
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/ic_game_optimizer_large"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/game_optimizer_description"
-        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
-        android:textColor="?android:attr/textColorSecondary"
-        android:gravity="center"
-        android:textSize="14sp" />
-
-</LinearLayout>
+    android:importantForAccessibility="no" />
