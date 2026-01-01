@@ -28,25 +28,34 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import org.lineageos.settings.device.R;
+import org.lineageos.settings.device.battery.BypassChargingController;
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 
 public class GameOptimizerFragment extends PreferenceFragmentCompat
-        implements OnPreferenceChangeListener {
+        implements OnPreferenceChangeListener, BypassChargingController.StateChangeListener {
 
     private static final String KEY_BYPASS_CHARGING = "bypass_charging";
 
     private SwitchPreferenceCompat mBypassChargingPreference;
+    private BypassChargingController mController;
 
     private final BroadcastReceiver mPowerReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateBypassChargingState();
+            String action = intent.getAction();
+            if (Intent.ACTION_POWER_CONNECTED.equals(action)) {
+                mController.handlePowerConnected();
+            } else if (Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
+                mController.handlePowerDisconnected();
+            }
         }
     };
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.game_optimizer_preferences);
+
+        mController = BypassChargingController.getInstance(getContext());
 
         mBypassChargingPreference = findPreference(KEY_BYPASS_CHARGING);
         if (mBypassChargingPreference != null) {
@@ -63,10 +72,15 @@ public class GameOptimizerFragment extends PreferenceFragmentCompat
     public void onResume() {
         super.onResume();
         if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
+            // Register power state receiver
             IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_POWER_CONNECTED);
             filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
             getContext().registerReceiver(mPowerReceiver, filter);
+
+            // Register controller listener
+            mController.registerListener(this);
+
             updateBypassChargingState();
         }
     }
@@ -80,6 +94,26 @@ public class GameOptimizerFragment extends PreferenceFragmentCompat
             } catch (IllegalArgumentException e) {
                 // Receiver not registered, ignore
             }
+
+            mController.unregisterListener(this);
+        }
+    }
+
+    @Override
+    public void onStateChanged(boolean bypassEnabled, boolean powerConnected) {
+        if (mBypassChargingPreference == null) {
+            return;
+        }
+
+        // Update checked state
+        mBypassChargingPreference.setChecked(bypassEnabled);
+
+        // Update enabled state and summary based on power connection
+        mBypassChargingPreference.setEnabled(powerConnected);
+        if (!powerConnected) {
+            mBypassChargingPreference.setSummary(R.string.bypass_charging_unavailable_summary);
+        } else {
+            mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
         }
     }
 
@@ -87,9 +121,12 @@ public class GameOptimizerFragment extends PreferenceFragmentCompat
         if (mBypassChargingPreference == null) {
             return;
         }
-        boolean isCharging = BypassChargingUtils.isCharging(getContext());
-        mBypassChargingPreference.setEnabled(isCharging);
-        if (!isCharging) {
+        boolean isPowerConnected = BypassChargingUtils.isPowerConnected(getContext());
+        boolean isBypassEnabled = BypassChargingUtils.isCurrentlyEnabled(getContext());
+
+        mBypassChargingPreference.setChecked(isBypassEnabled);
+        mBypassChargingPreference.setEnabled(isPowerConnected);
+        if (!isPowerConnected) {
             mBypassChargingPreference.setSummary(R.string.bypass_charging_unavailable_summary);
         } else {
             mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
@@ -100,7 +137,7 @@ public class GameOptimizerFragment extends PreferenceFragmentCompat
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (KEY_BYPASS_CHARGING.equals(preference.getKey())) {
             boolean enabled = (Boolean) newValue;
-            return BypassChargingUtils.setEnabled(enabled);
+            return BypassChargingUtils.setEnabled(getContext(), enabled);
         }
         return false;
     }

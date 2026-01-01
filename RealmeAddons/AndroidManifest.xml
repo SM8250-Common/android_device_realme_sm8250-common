@@ -108,6 +108,10 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".battery.PowerStateMonitorService"
+            android:exported="false" />
+
         <!-- GameBar Overlay -->
         <activity
             android:name=".gamebar.GameBarSettingsActivity"

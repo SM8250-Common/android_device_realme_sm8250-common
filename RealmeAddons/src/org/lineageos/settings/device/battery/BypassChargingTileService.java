@@ -16,20 +16,32 @@
 
 package org.lineageos.settings.device.battery;
 
-import android.content.SharedPreferences;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
-import androidx.preference.PreferenceManager;
 
-import org.lineageos.settings.device.R;
+public class BypassChargingTileService extends TileService
+        implements BypassChargingController.StateChangeListener {
 
-public class BypassChargingTileService extends TileService {
-
-    private static final String BYPASS_CHARGING_KEY = "bypass_charging";
+    private BypassChargingController mController;
 
     @Override
     public void onStartListening() {
         super.onStartListening();
+        mController = BypassChargingController.getInstance(this);
+        mController.registerListener(this);
+        updateTile();
+    }
+
+    @Override
+    public void onStopListening() {
+        super.onStopListening();
+        if (mController != null) {
+            mController.unregisterListener(this);
+        }
+    }
+
+    @Override
+    public void onStateChanged(boolean bypassEnabled, boolean powerConnected) {
         updateTile();
     }
 
@@ -43,22 +55,17 @@ public class BypassChargingTileService extends TileService {
             return;
         }
 
-        if (!BypassChargingUtils.isCharging(this)) {
+        if (!mController.isPowerConnected()) {
             // Don't allow toggling when not charging
             updateTile();
             return;
         }
 
-        boolean currentState = BypassChargingUtils.isCurrentlyEnabled();
+        boolean currentState = mController.isBypassEnabled();
         boolean newState = !currentState;
 
-        if (BypassChargingUtils.setEnabled(newState)) {
-            // Save to preferences
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean(BYPASS_CHARGING_KEY, newState).apply();
-
-            updateTile();
-        }
+        BypassChargingUtils.setEnabled(this, newState);
+        updateTile();
     }
 
     private void updateTile() {
@@ -69,11 +76,11 @@ public class BypassChargingTileService extends TileService {
 
         if (!BypassChargingUtils.isSupported()) {
             tile.setState(Tile.STATE_UNAVAILABLE);
-        } else if (!BypassChargingUtils.isCharging(this)) {
+        } else if (!mController.isPowerConnected()) {
             // Disable tile when not charging
             tile.setState(Tile.STATE_UNAVAILABLE);
         } else {
-            boolean enabled = BypassChargingUtils.isCurrentlyEnabled();
+            boolean enabled = mController.isBypassEnabled();
             tile.setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
         }
 
