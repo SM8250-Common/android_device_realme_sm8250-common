@@ -17,6 +17,7 @@
 package org.lineageos.settings.device.gamebar;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,6 +30,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class GameDataExport {
+
+    private static final String TAG = "GameDataExport";
 
     private static GameDataExport sInstance;
     public static synchronized GameDataExport getInstance() {
@@ -95,8 +98,17 @@ public class GameDataExport {
 
     public void exportDataToCsv() {
         if (mStatsRows.size() <= 1) {
+            Log.d(TAG, "No data to export");
             return;
         }
+
+        // Check if external storage is available and writable
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+            Log.e(TAG, "External storage not available: " + state);
+            return;
+        }
+
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File outFile = new File(Environment.getExternalStorageDirectory(), "GameBar_log_" + timeStamp + ".csv");
 
@@ -108,10 +120,16 @@ public class GameDataExport {
                 bw.newLine();
             }
             bw.flush();
-        } catch (IOException ignored) {
+            Log.d(TAG, "Successfully exported data to: " + outFile.getAbsolutePath());
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to export data to CSV", e);
         } finally {
             if (bw != null) {
-                try { bw.close(); } catch (IOException ignored) {}
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to close BufferedWriter", e);
+                }
             }
         }
     }
