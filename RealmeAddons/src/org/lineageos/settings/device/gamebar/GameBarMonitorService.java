@@ -20,6 +20,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import androidx.preference.PreferenceManager;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class GameBarMonitorService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.getMainLooper());
         mMonitorRunnable = new Runnable() {
             @Override
             public void run() {
