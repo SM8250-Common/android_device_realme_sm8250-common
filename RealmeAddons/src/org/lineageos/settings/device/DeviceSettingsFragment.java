@@ -16,34 +16,20 @@
 
 package org.lineageos.settings.device;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
-import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
 
 public class DeviceSettingsFragment extends PreferenceFragmentCompat
         implements OnPreferenceChangeListener {
 
     private static final String KEY_ANTI_FLICKER = "anti_flicker";
-    private static final String KEY_BYPASS_CHARGING = "bypass_charging";
 
     private SwitchPreferenceCompat mAntiFlikerPreference;
-    private SwitchPreferenceCompat mBypassChargingPreference;
-
-    private final BroadcastReceiver mPowerReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            updateBypassChargingState();
-        }
-    };
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -58,53 +44,6 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
                 getPreferenceScreen().removePreference(mAntiFlikerPreference);
             }
         }
-
-        mBypassChargingPreference = findPreference(KEY_BYPASS_CHARGING);
-        if (mBypassChargingPreference != null) {
-            if (BypassChargingUtils.isSupported()) {
-                mBypassChargingPreference.setOnPreferenceChangeListener(this);
-                updateBypassChargingState();
-            } else {
-                getPreferenceScreen().removePreference(mBypassChargingPreference);
-            }
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(Intent.ACTION_POWER_CONNECTED);
-            filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-            getContext().registerReceiver(mPowerReceiver, filter);
-            updateBypassChargingState();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mBypassChargingPreference != null && BypassChargingUtils.isSupported()) {
-            try {
-                getContext().unregisterReceiver(mPowerReceiver);
-            } catch (IllegalArgumentException e) {
-                // Receiver not registered, ignore
-            }
-        }
-    }
-
-    private void updateBypassChargingState() {
-        if (mBypassChargingPreference == null) {
-            return;
-        }
-        boolean isCharging = BypassChargingUtils.isCharging(getContext());
-        mBypassChargingPreference.setEnabled(isCharging);
-        if (!isCharging) {
-            mBypassChargingPreference.setSummary(R.string.bypass_charging_unavailable_summary);
-        } else {
-            mBypassChargingPreference.setSummary(R.string.bypass_charging_summary);
-        }
     }
 
     @Override
@@ -112,9 +51,6 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         if (KEY_ANTI_FLICKER.equals(preference.getKey())) {
             boolean enabled = (Boolean) newValue;
             return AntiFlikerUtils.setEnabled(enabled);
-        } else if (KEY_BYPASS_CHARGING.equals(preference.getKey())) {
-            boolean enabled = (Boolean) newValue;
-            return BypassChargingUtils.setEnabled(enabled);
         }
         return false;
     }

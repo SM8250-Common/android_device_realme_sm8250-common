@@ -22,27 +22,25 @@
         android:selectable="false" />
 
     <PreferenceCategory
-        android:key="game_optimizer_performance_category"
-        android:title="@string/game_optimizer_performance_title">
-        <!-- Performance optimization options will be added here -->
-    </PreferenceCategory>
+        android:key="game_optimizer_category"
+        android:title="@string/game_optimizer_title">
 
-    <PreferenceCategory
-        android:key="game_optimizer_thermal_category"
-        android:title="@string/game_optimizer_thermal_title">
-        <!-- Thermal management options will be added here -->
-    </PreferenceCategory>
+        <SwitchPreferenceCompat
+            android:key="bypass_charging"
+            android:title="@string/bypass_charging_title"
+            android:summary="@string/bypass_charging_summary"
+            android:defaultValue="false" />
 
-    <PreferenceCategory
-        android:key="game_optimizer_network_category"
-        android:title="@string/game_optimizer_network_title">
-        <!-- Network optimization options will be added here -->
-    </PreferenceCategory>
+        <Preference
+            android:key="game_bar_settings"
+            android:title="@string/game_bar_title"
+            android:summary="@string/game_bar_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="org.lineageos.settings.device"
+                android:targetClass="org.lineageos.settings.device.gamebar.GameBarSettingsActivity" />
+        </Preference>
 
-    <PreferenceCategory
-        android:key="game_optimizer_display_category"
-        android:title="@string/game_optimizer_display_title">
-        <!-- Display optimization options will be added here -->
     </PreferenceCategory>
 
 </PreferenceScreen>

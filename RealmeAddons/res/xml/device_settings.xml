@@ -28,26 +28,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="gaming_category"
-        android:title="Gaming">
-
-        <SwitchPreferenceCompat
-            android:key="bypass_charging"
-            android:title="@string/bypass_charging_title"
-            android:summary="@string/bypass_charging_summary"
-            android:defaultValue="false" />
-
-        <Preference
-            android:key="game_bar_settings"
-            android:title="@string/game_bar_title"
-            android:summary="@string/game_bar_summary">
-            <intent
-                android:action="android.intent.action.MAIN"
-                android:targetPackage="org.lineageos.settings.device"
-                android:targetClass="org.lineageos.settings.device.gamebar.GameBarSettingsActivity" />
-        </Preference>
-
-    </PreferenceCategory>
-
 </PreferenceScreen>
