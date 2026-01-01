@@ -51,10 +51,14 @@ import java.util.Locale;
 
 public class GameBar {
 
-    private static GameBar sInstance;
-    public static synchronized GameBar getInstance(Context context) {
+    private static volatile GameBar sInstance;
+    public static GameBar getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new GameBar(context.getApplicationContext());
+            synchronized (GameBar.class) {
+                if (sInstance == null) {
+                    sInstance = new GameBar(context.getApplicationContext());
+                }
+            }
         }
         return sInstance;
     }
