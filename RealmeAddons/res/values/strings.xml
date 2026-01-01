@@ -43,7 +43,7 @@
     <string name="game_bar_tile_description">Toggle the game overlay</string>
 
     <!-- Game Optimizer -->
-    <string name="game_optimizer_title">Game Optimizer</string>
+    <string name="game_optimizer_title">Game Tools</string>
     <string name="game_optimizer_summary">Optimize device performance for gaming</string>
     <string name="game_optimizer_description">Enhance your gaming experience with optimized performance settings and battery management features designed for extended gaming sessions</string>
 
