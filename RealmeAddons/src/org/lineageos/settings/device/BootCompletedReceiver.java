@@ -24,6 +24,7 @@ import android.util.Log;
 import org.lineageos.settings.device.battery.BypassChargingUtils;
 import org.lineageos.settings.device.battery.PowerStateMonitorService;
 import org.lineageos.settings.device.display.AntiFlikerUtils;
+import org.lineageos.settings.device.thermal.ThermalUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
@@ -38,6 +39,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         // Restore bypass charging state
         BypassChargingUtils.restore(context);
+
+        // Restore thermal profile state
+        ThermalUtils.restore(context);
 
         // Start power state monitor service
         Intent serviceIntent = new Intent(context, PowerStateMonitorService.class);

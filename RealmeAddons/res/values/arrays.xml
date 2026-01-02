@@ -117,4 +117,25 @@
         <item>10000</item>
     </string-array>
 
+    <!-- Thermal Profile Options -->
+    <string-array name="thermal_profile_entries">
+        <item>@string/thermal_profile_default</item>
+        <item>@string/thermal_profile_benchmark</item>
+        <item>@string/thermal_profile_browser</item>
+        <item>@string/thermal_profile_camera</item>
+        <item>@string/thermal_profile_dialer</item>
+        <item>@string/thermal_profile_gaming</item>
+        <item>@string/thermal_profile_streaming</item>
+    </string-array>
+
+    <string-array name="thermal_profile_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
 </resources>
