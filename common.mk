@@ -273,6 +273,9 @@ $(call soong_config_set,qtipower,tap_to_wake_node,/proc/touchpanel/double_tap_en
 PRODUCT_PACKAGES += \
     libvndfwk_detect_jni.qti.vendor # Needed by CNE app
 
+# RealmeAddons
+$(call inherit-product-if-exists, packages/apps/RealmeAddons/realmeaddons.mk)
+
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors-service.oplus-multihal \
