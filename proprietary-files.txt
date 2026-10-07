@@ -22,7 +22,6 @@ odm/lib/rfsa/adsp/libQnnHtpSkel.so
 odm/lib/rfsa/adsp/libVDHexagonBlurless_v2_skel.so
 odm/lib/rfsa/adsp/libarc_hta_driver_skel.so
 odm/lib/rfsa/adsp/libarcsoft_dualcam_refocus_5221_skel.so
-odm/lib/rfsa/adsp/libarcsoft_dualcam_refocus_skel.so
 odm/lib/rfsa/adsp/libarcsoft_hdrplus_hvx_skel.so
 odm/lib/rfsa/adsp/libarcsoft_portraitSN_hvx_skel.so
 odm/lib/rfsa/adsp/libc++.so.1
@@ -128,6 +127,13 @@ vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.0.so
 vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.1.so
 vendor/lib64/vendor.qti.hardware.fm@1.0.so
 
+# Camera - from OnePlus 8T (KB2005_14.0.0.603(EX01))
+odm/lib/rfsa/adsp/libarcsoft_dualcam_refocus_skel.so|2d7abab9c8d72d5410df2b6ab7a4d151c8151926
+odm/lib64/libarcsoft_dualcam_bokeh_api.so|1ab59342de1b31e8ed70335783a4f5f40653fb7d
+odm/lib64/libarcsoft_dualcam_refocus_left.so|6b5d9bfe5251830fb54ac1f34b6e77339e32347e
+odm/lib64/libarcsoft_dualcam_refocus_preview.so|e76f27e392463562ab447595dc5cdd587a61c000
+odm/lib64/libarcsoft_dualcam_refocus_uw.so|6c290a3a3875f14e776f8df6d37670dec61e4086
+
 # Camera
 odm/bin/vl53l1_daemon_main
 odm/lib/libDeVIS.so
@@ -222,10 +228,6 @@ odm/lib64/libapspng.so
 odm/lib64/libarcsoft_aicolor_image.so
 odm/lib64/libarcsoft_aicolor_video.so
 odm/lib64/libarcsoft_distortion_correction.so
-odm/lib64/libarcsoft_dualcam_bokeh_api.so
-odm/lib64/libarcsoft_dualcam_refocus_left.so
-odm/lib64/libarcsoft_dualcam_refocus_preview.so
-odm/lib64/libarcsoft_dualcam_refocus_uw.so
 odm/lib64/libarcsoft_hdr_couple_api.so
 odm/lib64/libarcsoft_hdr_couple_api_v4.so
 odm/lib64/libarcsoft_hdr_denoise_api.so
