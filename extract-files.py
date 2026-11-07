@@ -90,6 +90,8 @@ def blob_fixup_nop_call(
 
 
 blob_fixups: blob_fixups_user_type = {
+    'odm/bin/hw/vendor.oplus.hardware.biometrics.face@1.0-service': blob_fixup()
+        .remove_needed('libhidltransport.so'),
     'odm/bin/hw/vendor.oplus.hardware.biometrics.fingerprint@2.1-service': blob_fixup()
         .add_needed('libshims_fingerprint.oplus.so'),
     'odm/etc/izat.conf': blob_fixup()
